@@ -32,43 +32,42 @@
 </template>
 
 <script>
-import { v4 as uuidv4 } from 'uuid';
+
 import { mapActions } from 'vuex';
 export default {
     data(){
       return{
           postulante:{
-              id: '',
               nombre: '',
               celular: '',
               email: '',
               programa: '',
-              politica: [],
           },
       };
     },
     methods: {
-      ...mapActions(['setActions']),
-        procesarInfo(){
-
-        //reset
-        this.postulante = {
-          id: '',
-          nombre: '',
-          celular: '',
-          email: '',
-          programa: '',
-          politica: [],
-        }
-      }
-
      
+     async procesarInfo(){
+    const rawResponse = await fetch('https://thawing-stream-82830.herokuapp.com/app/interesados/', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(this.postulante)
+  });
+  const content = await rawResponse.json();
+
+  console.log(content);
+
+      },
+    
     },
 
 };
 </script>
 
-<style>
+<style scoped >
 
 
 *{

@@ -50,7 +50,6 @@ export default {
   background-repeat: no-repeat;
 }
 .nav{
-  position: absolute;
   width: 100%;
   padding-top: 0;
 }

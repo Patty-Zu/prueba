@@ -11,7 +11,7 @@
             <input class="control" type="email" placeholder="Correo" v-model="nuevo.email"  required/>
           </div>
           <div >
-            <input class="control" type="text" placeholder="Nombre y Apellido" v-model="nuevo.nombre"  />
+            <input class="control" type="text" placeholder="Nombre y Apellido" v-model="nuevo.username"  />
           </div>
           <div>
               <input class="control" type="password" placeholder="Contraseña" v-model="nuevo.password" />
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+
 export default {
     data(){
       return{
@@ -43,37 +43,26 @@ export default {
 
     
     methods: {
-      /*
-     async registrar() {
-  // Simple POST request with a JSON body using fetch
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+     
+    async registrar(){
+    const rawResponse = await fetch('https://thawing-stream-82830.herokuapp.com/auth/register/', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify(this.nuevo)
-  };
-   await fetch("https://thawing-stream-82830.herokuapp.com/register​/", requestOptions)
-    .then(response => response.json())
-    .then(data => (this.nuevo = data.id));
-},*/
+  });
+  const content = await rawResponse.json();
 
-async registrar() {
-  // POST request using fetch with async/await
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(this.nuevo)
-  };
-  const response = await fetch("https://thawing-stream-82830.herokuapp.com/auth/register​", requestOptions);
-  const data = await response.json();
-  this.nuevo = data.id;
-  console.log(data);
-},
-      
+  console.log(content);
 
       },
     
+    },
 
 };
+
 </script>
 
 <style scope>
