@@ -3,23 +3,23 @@
     
   </div>
   <div> 
-      <form class="form-reg" @submit.prevent="procesarInfo()">
+      <form class="form-reg" @submit.prevent="registrar">
           <div>
-            <img src="../assets/reg.png" alt="reg">
-          </div>
-          <div class="">
-            <input class="control" type="text" placeholder="Nombre y Apellido" v-model="nuevo.nombre" required/>
+            <img src="../assets/idat.png" alt="reg">
           </div>
           <div>
-            <input class="control" type="email" placeholder="Correo" v-model="nuevo.email"/>
+            <input class="control" type="email" placeholder="Correo" v-model="nuevo.email"  required/>
+          </div>
+          <div >
+            <input class="control" type="text" placeholder="Nombre y Apellido" v-model="nuevo.nombre"  />
           </div>
           <div>
-              <input class="control" type="password" placeholder="Contraseña" v-model="nuevo.password"/>
+              <input class="control" type="password" placeholder="Contraseña" v-model="nuevo.password" />
           </div>
       
-          <div>
+          <div class="sel">
             <input type="checkbox" id="check-1" value="Acepto" v-model="nuevo.politica" >
-            <label for="check-1">Acepto <a href="#"> terminos y condiciones</a></label>
+            <label for="check-1"> Acepto <a href="#"> los terminos y condiciones</a></label>
           </div>
           <div>
               <button type="submit">Registrarse</button>
@@ -29,41 +29,54 @@
 </template>
 
 <script>
-import { v4 as uuidv4 } from 'uuid';
-import { mapActions } from 'vuex';
+import axios from 'axios';
 export default {
     data(){
       return{
           nuevo:{
-              id: '',
-              nombre: '',
               email: '',
+              username: '',
               password: '',
-              terminos: [],
           },
       };
     },
+
+    
     methods: {
-      ...mapActions(['setRegistroAction']),
-        procesarInfo(){
-          if(this.postulante.nombre.trim() === ''){
-            console.log(nuevo.password);
-            return;
-          }
+      /*
+     async registrar() {
+  // Simple POST request with a JSON body using fetch
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(this.nuevo)
+  };
+   await fetch("https://thawing-stream-82830.herokuapp.com/register​/", requestOptions)
+    .then(response => response.json())
+    .then(data => (this.nuevo = data.id));
+},*/
 
-          //genera id
-          this.nuevo.id=uuidv4();
-          //console.log(this.nuevo);
+async registrar() {
+  // POST request using fetch with async/await
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(this.nuevo)
+  };
+  const response = await fetch("https://thawing-stream-82830.herokuapp.com/auth/register​", requestOptions);
+  const data = await response.json();
+  this.nuevo = data.id;
+  console.log(data);
+},
+      
 
-          //mandar al action
-          this.setRegistroAction(this.nuevo);
-        },
-    },
+      },
+    
 
 };
 </script>
 
-<style>
+<style scope>
 
 
 *{
@@ -74,10 +87,10 @@ export default {
 
 .form-reg{
   width:400px;
-  background: palevioletred;
+  height: 570px;
   padding: 10px;
   margin: auto;
-  margin-top:100px;
+  
   border-radius: 4px;
   font-family: 'Poppins', sans-serif;
   color: black;
@@ -98,12 +111,21 @@ export default {
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
 }
+.sel{
+  margin-top: 20px;
+}
+
+label{
+  display: flex;
+  align-items: left;
+}
+
  button{
    width: 100%;
-   margin-top: 20px;
+   margin-top: 55px;
    padding: 10px;
    border-radius: 4px;
-   border: 1px solid #5640FF;
+   border: 1px solid;
    background: #5640FF;
    font-family: 'Poppins',sans-serif;
    font-size: 16pt;
@@ -112,8 +134,53 @@ export default {
  }
 
  .form-reg img{
-   width: 250px;
-   height: 150px;
+   width: 180px;
+   height: 180px;
    margin: 5px 0 30px;
  }
+ 
+ input[type="checkbox"]:not(old) + label {
+   cursor: pointer;
+}
+
+input[type="checkbox"]:not(old) + label:before {
+   content: '';
+   width: 15px;
+   height: 15px;
+   border: 1px double black;
+   cursor: pointer;
+   vertical-align: top;
+   display: inline-block;
+   margin-right: 5px;
+}
+
+.wrapper {
+  position: relative;
+}
+
+input[type="checkbox"]:not(old) {
+
+  /* Opacidad para ocultar el input */
+  opacity: 0;
+
+  /* Position para dejar el input bajo el label
+     (Es importante agregar al contenedor una posición relativa) */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Este es un pequeño reset */
+input[type="checkbox"]:not(old) + label::-moz-selection,
+input[type="checkbox"]:not(old) + label::selection {
+  color: inherit;
+  background-color: transparent;
+}
+
+input[type="checkbox"]:not(old):checked + label:before {
+   /* Estilos del input seleccionado */
+   box-shadow: inset 0 0 1px 2px white;
+   background: black;
+}
+ 
 </style>

@@ -3,7 +3,10 @@
       <form @submit.prevent="procesarInfo" class="form-post">
           <h3>Postula y obten un 10%</h3>
           <h3>de descuento en el programa</h3>
-          <div>
+          <div
+          
+          
+          >
             <input class="control" type="text" placeholder="NOMBRE" v-model="postulante.nombre" required/>
           </div>
 
@@ -47,16 +50,6 @@ export default {
     methods: {
       ...mapActions(['setActions']),
         procesarInfo(){
-          console.log(this.postulante);
-          
-
-          //genera id
-          this.postulante.id=uuidv4();
-          //console.log(this.postulante);
-
-          //mandar al action
-          //console.log(this.postulante);
-          this.setPostulanteAction(this.postulante);
 
         //reset
         this.postulante = {
@@ -68,6 +61,8 @@ export default {
           politica: [],
         }
       }
+
+     
     },
 
 };
@@ -110,7 +105,7 @@ export default {
 
 
 .control{
-  width: 20px;
+  width: 50px;
   padding: 5px;
   border-radius: 4px;
   margin-right: 30px;

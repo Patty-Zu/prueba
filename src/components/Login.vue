@@ -1,9 +1,9 @@
 <template>
 <div>
   
-      <form class="form-log" @submit.prevent="procesarInfo()">
+      <form class="form-log" @submit.prevent="procesarInfo">
           <div>
-            <img src="../assets/login.png" alt="login">
+            <img src="../assets/idat.png" alt="login">
           </div>
           <div>
             <input class="control" type="email" placeholder="Correo Electronico" v-model="usuario.email" required/>
@@ -11,6 +11,7 @@
           <div>
               <input class="control" type="password" placeholder="Contraseña" v-model="usuario.password"/>
           </div>
+          <div class="lib"><label>Ingresa un correo valido</label></div>
           <div>
               <button type="submit">Ingresar</button>
           </div>
@@ -21,7 +22,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
 export default {
 
     data(){
@@ -33,22 +33,16 @@ export default {
       };
     },
     methods: {
-      ...mapActions(['setUsuarioAction']),
-        procesarInfo(){
-          if(this.usuario.nombre.trim() === ''){
-            console.log('campo vacio');
-            return;
-          }
+      enviar(){
 
-          //mandar al action
-          this.setUsuarioAction(this.usuario);
-        },
+      },
+  
     },
 
 };
 </script>
 
-<style>
+<style scope>
 
 
 *{
@@ -58,10 +52,10 @@ export default {
 }
 
 .form-log{
+  
+  margin-top:0;
   width:400px;
-  height: 500px;
-  background: cadetblue;
-  border: 1px solid black;
+  height: 570px;
   padding: 8px;
   margin: 0 auto;
   
@@ -70,21 +64,25 @@ export default {
   color: black;
 }
 
-
 .control{
   width: 100%;
   padding: 10px;
   border-radius: 4px;
-  margin-bottom: 16px;
+  margin-bottom: 30px;
   border: 1px solid gray;
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
 }
 
+.lib{
+  color: red;
+  font-size: 13px;
+  margin: -15px 0 0 220px ;
+}
+
  button{
    width: 100%;
-   margin-top: 30px;
-   padding: 10px;
+   margin-top: 10px;
    border-radius: 5px;
    background: #5640FF;
    font-family: 'Poppins',sans-serif;
@@ -97,9 +95,6 @@ export default {
    width: 170px;
    height: 170px;
    margin: 5px 0 50px;
-
-   
-
  }
 
 </style>
